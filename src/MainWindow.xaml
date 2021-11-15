@@ -1,0 +1,127 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ffme="clr-namespace:Unosquare.FFME;assembly=ffme.win"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:vm="clr-namespace:WpfApp1"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance vm:MainWindow, IsDesignTimeCreatable=True}"
+        Title="Player" Height="479" Width="800" Background="Black" MinWidth="740" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderThickness="0" MinHeight="190" Closed="Window_Closed" LayoutUpdated="Window_LayoutUpdated" MouseMove="Window_MouseMove" LocationChanged="Window_LocationChanged" SizeChanged="Window_SizeChanged" Closing="Window_Closing" Activated="Window_Activated" Deactivated="Window_Deactivated">
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ffme:MediaElement Name="Media" x:FieldModifier="public" LoadedBehavior="Pause" UnloadedBehavior="Manual" MediaOpened="Media_MediaOpened" MediaReady="Media_MediaReady" Background="Black" Foreground="Black" Grid.Column="0"/>
+        <Grid Name="ChildGrid" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="41"/>
+            </Grid.RowDefinitions>
+
+
+            <Canvas x:Name="controlBackground" Background="{DynamicResource ShadedBackgroundBrush}" Height="131" VerticalAlignment="Bottom" Grid.RowSpan="3"/>
+
+            <Grid Name="SliderBoxGrid" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Name ="SliderLabelGrid" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="115*"/>
+                        <ColumnDefinition Width="17*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="progressLabel" Content="00:00:00" Margin="10,0,0,10" Foreground="White" HorizontalAlignment="Left" Width="70"/>
+                    <Label Name="processingLabel" Content="" Margin="10,0,0,10" Foreground="White" HorizontalAlignment="Center" Width="140"/>
+                    <Label Name="NowFrameLabel" Content="0" Margin="0,0,00,0" Foreground="White" Grid.Column="1"/>
+                </Grid>
+                <Grid Name="SliderGrid" Grid.Row="1">
+                    <Slider x:Name="progressSlider"
+                            Style="{DynamicResource PositionSliderStyle}" ValueChanged="progressSlider_ValueChanged"
+                        Margin="10,0,10,0" Thumb.DragDelta="progressSlider_DragDelta" MouseWheel="progressSlider_MouseWheel"/>
+                    <Canvas Name="PointCanvas" Margin="20,16,20,16" UseLayoutRounding="True"/>
+                </Grid>
+            </Grid>
+
+            <Grid Name="ControlBoxGrid" Grid.Row="2">
+                <DockPanel Name="LeftControlBox" HorizontalAlignment="Left" Width="180" Margin="25,0,0,0">
+                    <Button Name="PlayBtn" Margin="0,0,0,0" Click="PlayBtn_Click" Style="{DynamicResource ModernButtonStyle}">
+                        <Path Name="PlayBtnIcon" Stretch="Uniform" Data="M0,0L22.652,15.996998 0,31.999996z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                    </Button>
+                    <Button x:Name="StopBtn" Margin="0,0,0,0" Click="StopBtn_Click" Style="{DynamicResource ModernButtonStyle}">
+                        <Path Name="StopBtnIcon" Stretch="Uniform" Data="M0,0L29.198001,0 29.198001,32 0,32z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                    </Button>
+                    <Button x:Name="LeftFrameBtn" Margin="0,0,0,0" Click="LeftFrameBtn_Click" Style="{DynamicResource ModernButtonStyle}">
+                        <Path Stretch="Uniform" Data="M229.66667,106.75002 L229.66667,109.50008 234.66667,112.91667 229.5837,116.74997 229.5837,119.5833 238.24998,112.83349 z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" RenderTransformOrigin="0.5,0.5">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform Angle="180"/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
+                    </Button>
+                    <Button x:Name="RightFrameBtn" Margin="0,0,0,0" Click="RightFrameBtn_Click" Style="{DynamicResource ModernButtonStyle}">
+                        <Path Stretch="Uniform" Data="M229.66667,106.75002 L229.66667,109.50008 234.66667,112.91667 229.5837,116.74997 229.5837,119.5833 238.24998,112.83349 z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"/>
+                    </Button>
+                </DockPanel>
+                <DockPanel Name="CenterControlBox" HorizontalAlignment="Center" Margin="252,0,220,0" Width="318">
+                    <Label Content="Start Time" Foreground="White" Grid.Column="0" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" />
+                    <Label x:Name="progressMinimumLabel" Content="00:00:00" Foreground="White" Grid.Column="0" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" />
+                    <Label Content="End Time" Foreground="White" Grid.Column="0" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="40,0,0,10" />
+                    <Label x:Name="progressMaximumLabel" Content="00:00:00" Foreground="White" Grid.Column="1" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,10" />
+                </DockPanel>
+                <DockPanel x:Name="RightControlBox" HorizontalAlignment="Right" Width="195" Margin="0,0,10,0">
+                    <ToggleButton Name="VolumeButton" Style="{DynamicResource ModernToggleButtonStyle}" Click="VolumeButton_Click">
+                        <Path Name="VolumeBtnIcon" Stretch="Uniform" Data="M16,0L16,25 8,17.5 0,17.5 0,8 8,8z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}" />
+                    </ToggleButton>
+                    <Popup IsOpen="False" StaysOpen="False" Name="VolumePopup" PopupAnimation="Fade" Placement="Top" PlacementTarget="{Binding ElementName=VolumeButton}" VerticalOffset="2" HorizontalOffset="-18">
+                        <Popup.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="{StaticResource CustomSliderHighlightBrush}" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="TextAlignment" Value="Center" />
+                            </Style>
+                        </Popup.Resources>
+                        <Border Background="#FF1F1F1F" BorderBrush="#FF767676" BorderThickness="1">
+                            <Grid Width="364" Height="40">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="60" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Row="0" Grid.Column="0">Volume</TextBlock>
+                                <Slider Name="VolumeSlider" Grid.Row="0"  Grid.Column="1" Style="{DynamicResource CustomSliderStyle}" 
+                                        Minimum="0.0" Maximum="100.0"  ValueChanged="VolumeSlider_ValueChanged" Thumb.DragDelta="VolumeSlider_DragDelta" IsSnapToTickEnabled="True" TickFrequency="1" Value="50"  />
+                                <TextBlock Name="VolumeLabel" Grid.Row="0" Grid.Column="2" Text="50"/>
+                            </Grid>
+                        </Border>
+                    </Popup>
+                    <ToggleButton Name="FullscreenButton" Style="{DynamicResource ModernToggleButtonStyle}" Click="FullscreenButton_Click">
+                        <Path Stretch="Uniform" Data="M9.6560059,19.516005L12.484985,22.345999 6.414978,28.413002 10,32 0,32 0,21.999998 3.5849915,25.585007z M22.342987,19.512999L28.412994,25.585007 32,21.999998 32,32 22,32 25.584991,28.413002 19.513,22.345999z M22,0L32,0 32,10.000001 28.414978,6.4129991 22.342987,12.486002 19.513,9.6559991 25.584991,3.5849995z M0,0L10,0 6.414978,3.5849995 12.483978,9.6569986 9.6569824,12.485002 3.5849915,6.4129991 0,10.000001z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}" />
+                    </ToggleButton>
+                    <ToggleButton Name="OpenInfoButton" Style="{DynamicResource ModernToggleButtonStyle}" Click="OpenInfoButton_Click" IsEnabled="False">
+                        <Path Name="OpenInfoButtonIcon" Stretch="Uniform" Data="M11.331985,10.669C11.137986,10.669 10.976986,10.731 10.852986,10.855999 10.728987,10.981 10.665987,11.141 10.665987,11.335L10.665987,14.668C10.665987,14.862 10.727986,15.021999 10.852986,15.146999 10.977986,15.271999 11.136986,15.334 11.331985,15.334L13.331984,15.334 13.331984,22 11.331985,22C11.137986,22 10.976986,22.063 10.852986,22.188 10.728987,22.313 10.665987,22.471999 10.665987,22.667L10.665987,26C10.665987,26.195 10.727986,26.354 10.852986,26.479 10.977986,26.604 11.136986,26.667 11.331985,26.667L20.665975,26.667C20.860975,26.667 21.019974,26.604 21.144974,26.479 21.269974,26.354 21.332974,26.193999 21.332974,26L21.330974,26.002 21.330974,22.667999C21.330974,22.474 21.267974,22.313999 21.143974,22.188999 21.019974,22.063999 20.859975,22.002 20.664975,22.002L18.665977,22.002 18.665977,11.335C18.665977,11.141 18.602977,10.981 18.477977,10.855999 18.352978,10.731 18.192978,10.669 17.998978,10.669z M13.999983,3.3329997C13.805983,3.3329997 13.646983,3.3959994 13.520984,3.5209994 13.394983,3.6459994 13.332984,3.8049994 13.332984,3.9999995L13.332984,7.3329997C13.332984,7.5269995 13.395984,7.6879995 13.520984,7.8119993 13.645983,7.9359996 13.805983,7.9989996 13.999983,7.9989996L17.999978,7.9989996C18.194978,7.9989996 18.353978,7.9369996 18.478977,7.8119993 18.603977,7.6869996 18.666977,7.5269995 18.666977,7.3329997L18.666977,3.9999995C18.666977,3.8049994 18.603977,3.6459994 18.478977,3.5209994 18.353978,3.3959994 18.193978,3.3329997 17.999978,3.3329997z M15.99998,0C18.902977,0 21.579974,0.7149992 24.030971,2.1459999 26.481968,3.5769997 28.422966,5.5179996 29.853964,7.9689994L29.855964,7.9689994C31.285962,10.42 32.000961,13.097 32.000961,16 32.000961,18.901999 31.285962,21.58 29.854964,24.030999 28.423966,26.482 26.482968,28.424 24.031971,29.854 21.579974,31.285 18.901977,32 15.99998,32 13.097983,32 10.419987,31.285 7.9689894,29.854 5.517992,28.423 3.5769958,26.482 2.1459961,24.030999 0.71499825,21.58 0,18.901999 0,16 0,13.098 0.71499825,10.421 2.1459961,7.9689994 3.5769958,5.5169997 5.517992,3.5769997 7.9689894,2.1459999 10.419987,0.7149992 13.096984,0 15.99998,0z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}" Opacity="0.3" />
+                    </ToggleButton>
+                    <Button Name="OpenFileButton" Margin="0,0,0,0" Style="{DynamicResource ModernButtonStyle}" Click="LoadFileBtn_Click">
+                        <Path Stretch="Uniform" Data="M0,10.999998L32,10.999998 29.400024,26.6 2.7000122,26.6z M2.7000122,0L13.5,0 13.5,3.3000179 29.400024,3.3000179 29.400024,7.2000106 2.7999878,7.2000106 2.7999878,3.6000056z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                    </Button>
+                </DockPanel>
+            </Grid>
+
+            <Canvas Name="FrameCanvas"  HorizontalAlignment="Left" Height="110" Margin="0,0,0,28.2" VerticalAlignment="Bottom" Width="792" RenderTransformOrigin="0.482,-0.588" Grid.RowSpan="2"/>
+
+        </Grid>
+    </Grid>
+</Window>

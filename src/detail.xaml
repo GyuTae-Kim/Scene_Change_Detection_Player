@@ -1,0 +1,174 @@
+﻿<Window x:Name="window" x:Class="WpfApp1.detail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="detail" Height="500" Width="400" ResizeMode="NoResize" WindowStyle="None" BorderThickness="0" Activated="window_Activated" Deactivated="window_Deactivated">
+    <Border Name="PropertyExplorerPanel" Width="400">
+        <DockPanel LastChildFill="True">
+            <Grid x:Name="PropertyExplorerPanelContent" Background="#FF252525">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"
+                              Height="{Binding ActualHeight, ElementName=window, Mode=OneWay}">
+                    <ItemsControl>
+                        <ItemsControl.Resources>
+                            <LinearGradientBrush x:Key="MainHeader" StartPoint="0,0" EndPoint="0,1">
+                                <GradientStopCollection>
+                                    <GradientStop Offset="0.03" Color="#bb0c0c0b" />
+                                    <GradientStop Offset="1.0" Color="#880c0c0b" />
+                                </GradientStopCollection>
+                            </LinearGradientBrush>
+                            <Style TargetType="TextBlock" x:Key="Main">
+                                <Setter Property="DockPanel.Dock" Value="Left" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="FontWeight" Value="SemiBold" />
+                                <Setter Property="FontSize" Value="15"></Setter>
+                                <Setter Property="TextAlignment" Value="Left" />
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Padding" Value="6,3,0,3" />
+                            </Style>
+                            <LinearGradientBrush x:Key="KeyHeader" StartPoint="0,0" EndPoint="0,1">
+                                <GradientStopCollection>
+                                    <GradientStop Offset="0.0" Color="#ffffffff" />
+                                    <GradientStop Offset="0.03" Color="#bb0c0c0b" />
+                                    <GradientStop Offset="1.0" Color="#880c0c0b" />
+                                </GradientStopCollection>
+                            </LinearGradientBrush>
+                            <Style TargetType="TextBlock" x:Key="Key">
+                                <Setter Property="DockPanel.Dock" Value="Left" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="FontWeight" Value="SemiBold" />
+                                <Setter Property="FontSize" Value="13"></Setter>
+                                <Setter Property="TextAlignment" Value="Left" />
+                                <Setter Property="Foreground" Value="WhiteSmoke" />
+                                <Setter Property="Padding" Value="6,3,0,3" />
+                            </Style>
+                            <Style TargetType="TextBlock" x:Key="Value">
+                                <Setter Property="DockPanel.Dock" Value="Right" />
+                                <Setter Property="Width" Value="126" />
+                                <Setter Property="TextWrapping" Value="NoWrap" />
+                                <Setter Property="FontFamily" Value="Courier New" />
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+                                <Setter Property="FontWeight" Value="Normal" />
+                                <Setter Property="FontSize" Value="14" />
+                                <Setter Property="Foreground" Value="WhiteSmoke" />
+                                <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+                                <Setter Property="Padding" Value="0,3,2,0" />
+                            </Style>
+                            <Style TargetType="DockPanel">
+                                <Setter Property="LastChildFill" Value="False" />
+                            </Style>
+                        </ItemsControl.Resources>
+                        <DockPanel Background="{StaticResource MainHeader}">
+                            <TextBlock Style="{StaticResource Main}" Width="250">More Infomation</TextBlock>
+                            <TextBlock Style="{StaticResource Value}">
+                                    <Button Name="CloseBtn" Height="20" Width="20" Margin="85,0,0,0" Click="CloseBtn_Click">
+                                        <Path Stretch="Uniform" Data="M20.200012,8.4000015L16,12.599998 11.800049,8.5 8.4000244,11.900002 12.600037,16.099998 8.4000244,20.300003 11.800049,23.699997 16,19.5 20.200012,23.699997 23.600037,20.300003 19.400024,16 23.600037,11.800003z M16,0C24.800049,0 32,7.1999969 32,16 32,24.800003 24.800049,32 16,32 7.2000122,32 0,24.800003 0,16 0,7.1999969 7.2000122,0 16,0z" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}" />
+                                    </Button>
+                            </TextBlock>
+                        </DockPanel>
+
+                        <DockPanel Background="{StaticResource KeyHeader}">
+                            <TextBlock Style="{StaticResource Key}">About Frame</TextBlock>
+                            <TextBlock Style="{StaticResource Value}" />
+                        </DockPanel>
+                        <DockPanel>
+                            <Grid Grid.Row="0" Grid.Column="0" Width="400" Height="191">
+                                <Label Content="Frame" Foreground="WhiteSmoke" Height="31" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,8,0,0"/>
+                                <TextBox x:Name="FrameTb" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="4000" VerticalAlignment="Top" Width="60" Margin="80,11,0,0"/>
+                                <Label Content="Threshold" Foreground="WhiteSmoke" Height="31" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,39,0,0"/>
+                                <TextBox x:Name="Threshold1" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="70" VerticalAlignment="Top" Width="60" Margin="80,43,0,0"/>
+                                <Label Content="Stride" Foreground="WhiteSmoke" Height="31" Width="45" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="160,39,0,0"/>
+                                <TextBox x:Name="value" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="50" Margin="210,43,0,0"/>
+                                <Button x:Name="FrameMoveBtn" Content="프레임 이동" Click="FrameMoveBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="270,12,0,0" Height="20"/>
+                                <Button x:Name="GetFrameBtn" Content="장면분할 (CV)" Click="GetFrameBtn_Click" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="100" Margin="270,42,0,0"/>
+                                <Label Content="Threshold" Foreground="WhiteSmoke" Height="31" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10,69,0,0"/>
+                                <TextBox x:Name="Threshold2" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="350" VerticalAlignment="Top" Width="60" Margin="80,73,0,0"/>
+                                <Button x:Name="CheckBranchBtn" Content="장면분할 (VGG)" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="270,73,0,0" Height="20" Click="CheckBranchBtn_Click"/>
+                                <Button x:Name="SaveMediaBtn" Content="영상 저장" Click="SaveMediaBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="270,102,0,0" Height="20"/>
+                                <Button x:Name="NextBranchBtn" Content="다음 장면" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="100" Margin="270,131,0,0" Click="NextBranchBtn_Click"/>
+                                <Button x:Name="BeforeBranchBtn" Content="이전 장면" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="100" Click="BeforeBranchBtn_Click" Margin="270,161,0,-10"/>
+                                <Label Content="Stride" Foreground="WhiteSmoke" Height="31" Width="45" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="160,69,0,0"/>
+                                <TextBox x:Name="value2" HorizontalAlignment="Left" Height="20" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="50" Margin="210,73,0,0"/>
+                                <Button x:Name="branchMakebtn" Content="분할 지점 추가" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="100" Margin="160,131,0,0" Click="BranchMakebtn_Click"/>
+                                <Button x:Name="Savebtn" Content="메타정보 저장" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="100" Margin="160,161,0,0" Click="Savebtn_Click"/>
+                            </Grid>
+                        </DockPanel>
+
+                        <DockPanel Background="{StaticResource KeyHeader}">
+                            <TextBlock Style="{StaticResource Key}">Media Format</TextBlock>
+                            <TextBlock Name="Media_Format" Style="{StaticResource Value}" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Media Size</TextBlock>
+                            <TextBlock Name="Media_Size" Style="{StaticResource Value}" IsEnabled="False" Text="0 b" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Bit Rate</TextBlock>
+                            <TextBlock Name="Bit_Rate" Style="{StaticResource Value}" Text="0.00 bits/s" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Video FPS</TextBlock>
+                            <TextBlock Name="Video_FPS" Style="{StaticResource Value}" Text="0" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Frame Count</TextBlock>
+                            <TextBlock Name="Frame_Count" Style="{StaticResource Value}" Text="0" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Video Codec</TextBlock>
+                            <TextBlock Name="Video_Codec" Style="{StaticResource Value}" Text="" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Video Width</TextBlock>
+                            <TextBlock Name="Video_Width" Style="{StaticResource Value}" Text="0" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Video Height</TextBlock>
+                            <TextBlock Name="Video_Height" Style="{StaticResource Value}" Text="0" Width="140" />
+                        </DockPanel>
+
+                        <DockPanel Background="{StaticResource KeyHeader}">
+                            <TextBlock Style="{StaticResource Key}">Audio Format</TextBlock>
+                            <TextBlock Style="{StaticResource Value}" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Audio Codec</TextBlock>
+                            <TextBlock Name="Audio_Codec" Style="{StaticResource Value}" Text="" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Audio Bit Rate</TextBlock>
+                            <TextBlock Name="Audio_Bit_Rate" Style="{StaticResource Value}" Text="0.00 kbits/s" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Audio Channels</TextBlock>
+                            <TextBlock Name="Audio_Channels" Style="{StaticResource Value}" Text="0" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Audio Sampling</TextBlock>
+                            <TextBlock Name="Audio_Sampling" Style="{StaticResource Value}" Text="0" Width="140" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">Audio_Bits/Sample</TextBlock>
+                            <TextBlock Name="Audio_Bits_Sample" Style="{StaticResource Value}" Text="0" Width="140" />
+                        </DockPanel>
+
+                        <DockPanel Background="{StaticResource KeyHeader}">
+                            <TextBlock Style="{StaticResource Key}">File System</TextBlock>
+                            <TextBlock Style="{StaticResource Value}" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">File Path</TextBlock>
+                            <TextBlock Name="File_Path" Style="{StaticResource Value}" Text="" Width="260" />
+                        </DockPanel>
+                        <DockPanel>
+                            <TextBlock Style="{StaticResource Key}">File Extension</TextBlock>
+                            <TextBlock Name="File_Extension" Style="{StaticResource Value}" Text="" Width="260" />
+                        </DockPanel>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
+        </DockPanel>
+    </Border>
+</Window>
